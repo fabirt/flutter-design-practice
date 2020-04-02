@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_design_practice/src/pages/headers_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -8,14 +9,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter design pratice',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Flutter design pratice'),
-        ),
-        body: const Center(
-          child: Text('Hello World'),
-        ),
-      ),
+      home: HeadersPage(),
     );
   }
 }
