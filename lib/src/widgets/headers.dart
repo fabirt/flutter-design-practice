@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 ///* Conventional rectangular header.
 class RectHeader extends StatelessWidget {
@@ -223,4 +224,90 @@ class _WavyHeaderPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_WavyHeaderPainter oldDelegate) => true;
+}
+
+class EmergencyHeader extends StatelessWidget {
+  final IconData icon;
+  final String title, subtitle;
+
+  final _textColor = Colors.white.withOpacity(0.7);
+
+  EmergencyHeader({
+    Key key,
+    @required this.icon,
+    @required this.title,
+    @required this.subtitle,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        const _EmergencyHeaderComtainer(),
+        Positioned(
+          top: -50.0,
+          left: -50.0,
+          child: FaIcon(
+            icon,
+            size: 200,
+            color: Colors.white12,
+          ),
+        ),
+        Column(
+          children: <Widget>[
+            const SizedBox(
+              height: 60.0,
+              width: double.infinity,
+            ),
+            Text(
+              title,
+              style: TextStyle(fontSize: 20.0, color: _textColor),
+            ),
+            const SizedBox(height: 10.0),
+            Text(
+              subtitle,
+              style: TextStyle(
+                color: _textColor,
+                fontSize: 25.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 10.0),
+            FaIcon(
+              icon,
+              size: 80.0,
+              color: Colors.white,
+            ),
+          ],
+        )
+      ],
+    );
+  }
+}
+
+class _EmergencyHeaderComtainer extends StatelessWidget {
+  const _EmergencyHeaderComtainer({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 250.0,
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.only(
+          bottomLeft: Radius.circular(90.0),
+        ),
+        gradient: LinearGradient(
+          colors: const <Color>[
+            Color(0xFF526BF6),
+            Color(0xFF67ACF2),
+          ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+      ),
+    );
+  }
 }
