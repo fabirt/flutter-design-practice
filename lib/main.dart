@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_design_practice/src/pages/circular_progress_page.dart';
+import 'package:flutter_design_practice/src/pages/slide_show_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter design pratice',
-      home: CircularProgressPage(),
+      home: SlideShowPage(),
     );
   }
 }
