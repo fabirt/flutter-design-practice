@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_design_practice/src/theme/theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -174,6 +176,16 @@ class __ThemeSwitcherState extends State<_ThemeSwitcher>
   AnimationController _controller;
 
   static const animDuration = Duration(milliseconds: 400);
+
+  static Color lerp(Color a, Color b, double t) {
+    return Color.fromARGB(
+      lerpDouble(a.alpha, b.alpha, t).toInt().clamp(0, 255),
+      lerpDouble(a.red, b.red, t).toInt().clamp(0, 255),
+      lerpDouble(a.green, b.green, t).toInt().clamp(0, 255),
+      lerpDouble(a.blue, b.blue, t).toInt().clamp(0, 255),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -181,6 +193,46 @@ class __ThemeSwitcherState extends State<_ThemeSwitcher>
       vsync: this,
       duration: animDuration,
     );
+
+    _controller.addListener(() {
+      final themeChanger = Provider.of<ThemeChanger>(context, listen: false);
+      if (_controller.isCompleted) {
+        themeChanger.darkTheme = true;
+      } else if (_controller.isDismissed) {
+        themeChanger.darkTheme = false;
+      } else if (!_controller.isAnimating) {
+        final themeData = themeChanger.currentTheme.copyWith(
+          accentColor: lerp(const Color(0xFF00BFA6), const Color(0xFFB91ABB),
+              _controller.value),
+          scaffoldBackgroundColor:
+              lerp(Colors.grey[50], const Color(0xFF04030B), _controller.value),
+          canvasColor: lerp(const Color(0xFFDFE2E8), const Color(0xFF2B2B2B),
+              _controller.value),
+          primaryColorLight: Colors.red,
+          primaryColorDark: Colors.blue,
+          appBarTheme: AppBarTheme(
+            iconTheme: IconThemeData(color: Colors.white),
+            color: lerp(
+              const Color(0xFF00BFA6),
+              const Color(0xFF04030B),
+              _controller.value,
+            ),
+          ),
+          textTheme: TextTheme(
+            subhead: TextStyle(
+              color: lerp(Colors.black, Colors.white, _controller.value),
+            ),
+          ),
+        );
+        final appThemeData = themeChanger.appTheme.copyWith(
+          borderColor: lerp(const Color(0xFFECEFF3), const Color(0xFF414141),
+              _controller.value),
+          powerButtonColor: lerp(const Color(0xFFE1E5EB),
+              const Color(0xFF1D1D1D), _controller.value),
+        );
+        themeChanger.updateTheme(themeData, appThemeData);
+      }
+    });
   }
 
   @override
@@ -189,27 +241,51 @@ class __ThemeSwitcherState extends State<_ThemeSwitcher>
     super.dispose();
   }
 
+  void _switchTheme(ThemeChanger themeChanger) {
+    if (_controller.isCompleted) {
+      _controller.reverse();
+      themeChanger.darkTheme = false;
+    } else {
+      _controller.forward();
+      themeChanger.darkTheme = true;
+    }
+  }
+
+  void _startDrag(DragStartDetails details) {}
+
+  void _updateDrag(DragUpdateDetails details) {
+    final deltaY = details.primaryDelta / 360.0;
+    _controller.value += deltaY;
+  }
+
+  void _endDrag(DragEndDetails details) {
+    if (_controller.isCompleted || _controller.isDismissed) {
+      return;
+    } else if (details.velocity.pixelsPerSecond.dy.abs() >= 360.0) {
+      final velocity = details.velocity.pixelsPerSecond.dy /
+          MediaQuery.of(context).size.height;
+      _controller.fling(velocity: velocity);
+    } else if (_controller.value < 0.5) {
+      _controller.reverse();
+    } else {
+      _controller.forward();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     const maxWidth = 225.0;
     const padding = 50.0;
-
+    final theme = Theme.of(context);
     final themeChanger = Provider.of<ThemeChanger>(context);
-    final bgColor = themeChanger.darkTheme
-        ? const Color(0xFF2B2B2B)
-        : const Color(0xFFDFE2E8);
-    final borderColor = themeChanger.darkTheme
-        ? const Color(0xFF414141)
-        : const Color(0xFFECEFF3);
-    final buttonColor = themeChanger.darkTheme
-        ? const Color(0xFF1D1D1D)
-        : const Color(0xFFE1E5EB);
+
+    final borderColor = themeChanger.appTheme.borderColor;
 
     return AnimatedContainer(
       duration: animDuration,
       width: double.infinity,
       height: double.infinity,
-      color: bgColor,
+      color: theme.canvasColor,
       child: Align(
         alignment: Alignment.centerLeft,
         child: AnimatedContainer(
@@ -218,7 +294,7 @@ class __ThemeSwitcherState extends State<_ThemeSwitcher>
           height: 360.0,
           width: maxWidth - (2 * padding),
           decoration: BoxDecoration(
-            color: bgColor,
+            color: theme.canvasColor,
             borderRadius: BorderRadius.circular(100.0),
             border: Border.all(width: 18.0, color: borderColor),
           ),
@@ -232,49 +308,23 @@ class __ThemeSwitcherState extends State<_ThemeSwitcher>
                   end: Alignment.bottomCenter,
                 ).animate(CurvedAnimation(
                   parent: _controller,
-                  curve: Curves.easeInOut,
+                  curve: Curves.ease,
                 ));
                 return Align(
                   alignment: position.value,
                   child: child,
                 );
               },
-              child: GestureDetector(
+              child: _PowerButton(
+                duration: animDuration,
+                width: maxWidth - 36 - 100,
+                height: maxWidth - 36 - 100,
                 onTap: () {
-                  if (_controller.isCompleted) {
-                    _controller.reverse();
-                    themeChanger.darkTheme = false;
-                  } else {
-                    _controller.forward();
-                    themeChanger.darkTheme = true;
-                  }
+                  _switchTheme(themeChanger);
                 },
-                child: AnimatedContainer(
-                  duration: animDuration,
-                  height: maxWidth - 36 - 100,
-                  width: maxWidth - 36 - 100,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.white30,
-                          offset: Offset(0.0, -6.0),
-                          blurRadius: 10.0,
-                        ),
-                        BoxShadow(
-                          color: Colors.black12,
-                          offset: Offset(0.0, 10.0),
-                          blurRadius: 10.0,
-                        ),
-                      ],
-                      color: buttonColor),
-                  child: FaIcon(
-                    FontAwesomeIcons.powerOff,
-                    size: 30.0,
-                    color: Theme.of(context).accentColor,
-                  ),
-                ),
+                onDragStart: _startDrag,
+                onDragUpdate: _updateDrag,
+                onDragEnd: _endDrag,
               ),
             ),
           ),
@@ -284,62 +334,60 @@ class __ThemeSwitcherState extends State<_ThemeSwitcher>
   }
 }
 
-class _Drawer extends StatelessWidget {
+class _PowerButton extends StatelessWidget {
+  final double width;
+  final double height;
+  final Duration duration;
+  final VoidCallback onTap;
+  final GestureDragStartCallback onDragStart;
+  final GestureDragUpdateCallback onDragUpdate;
+  final GestureDragEndCallback onDragEnd;
+
+  const _PowerButton({
+    @required this.width,
+    @required this.height,
+    this.duration,
+    this.onTap,
+    this.onDragStart,
+    this.onDragUpdate,
+    this.onDragEnd,
+  });
+
   @override
   Widget build(BuildContext context) {
     final themeChanger = Provider.of<ThemeChanger>(context);
-    final accentColor = themeChanger.currentTheme.accentColor;
+    final buttonColor = themeChanger.appTheme.powerButtonColor;
 
-    return Drawer(
-      child: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Container(
-              width: double.infinity,
-              height: 180.0,
-              padding: const EdgeInsets.all(15.0),
-              child: CircleAvatar(
-                backgroundColor: accentColor,
-                child: const Text(
-                  'FJ',
-                  style: TextStyle(
-                    fontSize: 50.0,
-                  ),
-                ),
-              ),
+    return GestureDetector(
+      onTap: onTap,
+      onVerticalDragStart: onDragStart,
+      onVerticalDragUpdate: onDragUpdate,
+      onVerticalDragEnd: onDragEnd,
+      child: AnimatedContainer(
+        duration: duration,
+        height: width,
+        width: height,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.white30,
+              offset: Offset(0.0, -6.0),
+              blurRadius: 10.0,
             ),
-            Expanded(
-              child: _MenuListView(),
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.lightbulb_outline,
-                color: accentColor,
-              ),
-              title: const Text('Dark Mode'),
-              trailing: Switch.adaptive(
-                value: themeChanger.darkTheme,
-                activeColor: accentColor,
-                onChanged: (bool value) {
-                  themeChanger.darkTheme = value;
-                },
-              ),
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.add_to_home_screen,
-                color: accentColor,
-              ),
-              title: const Text('Custom Theme'),
-              trailing: Switch.adaptive(
-                value: themeChanger.customTheme,
-                activeColor: accentColor,
-                onChanged: (bool value) {
-                  themeChanger.customTheme = value;
-                },
-              ),
+            BoxShadow(
+              color: Colors.black12,
+              offset: Offset(0.0, 10.0),
+              blurRadius: 10.0,
             ),
           ],
+          color: buttonColor,
+        ),
+        child: FaIcon(
+          FontAwesomeIcons.powerOff,
+          size: 30.0,
+          color: Theme.of(context).accentColor,
         ),
       ),
     );

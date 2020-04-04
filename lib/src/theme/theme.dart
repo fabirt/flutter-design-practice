@@ -4,6 +4,7 @@ class ThemeChanger with ChangeNotifier {
   bool _darkTheme = false;
   bool _customTheme = false;
   ThemeData _currentTheme;
+  AppThemeData _appThemeData;
 
   ThemeChanger([int value = 1]) {
     switch (value) {
@@ -32,6 +33,8 @@ class ThemeChanger with ChangeNotifier {
 
   ThemeData get currentTheme => _currentTheme;
 
+  AppThemeData get appTheme => _appThemeData;
+
   set darkTheme(bool value) {
     _customTheme = false;
     _darkTheme = value;
@@ -54,10 +57,17 @@ class ThemeChanger with ChangeNotifier {
     notifyListeners();
   }
 
+  void updateTheme(ThemeData data, AppThemeData appThemeData) {
+    _currentTheme = data;
+    _appThemeData = appThemeData;
+    notifyListeners();
+  }
+
   void _setDarkMode() {
     const accentColor = Color(0xFFB91ABB);
     const surfaceColor = Color(0xFF04030B);
-    const canvasColor = Color(0xFF390D56);
+    const canvasColor = Color(0xFF2B2B2B);
+    // const canvasColor = Color(0xFF390D56);
     _currentTheme = ThemeData.dark().copyWith(
       accentColor: accentColor,
       scaffoldBackgroundColor: surfaceColor,
@@ -76,12 +86,19 @@ class ThemeChanger with ChangeNotifier {
         },
       ),
     );
+
+    _appThemeData = AppThemeData(
+      borderColor: const Color(0xFF414141),
+      powerButtonColor: const Color(0xFF1D1D1D),
+    );
   }
 
   void _setLightMode() {
     const accentColor = Color(0xFF00BFA6);
+    const canvasColor = Color(0xFFDFE2E8);
     _currentTheme = ThemeData.light().copyWith(
       accentColor: accentColor,
+      canvasColor: canvasColor,
       primaryColorDark: Colors.black,
       appBarTheme: const AppBarTheme(
         color: accentColor,
@@ -95,6 +112,11 @@ class ThemeChanger with ChangeNotifier {
           TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
         },
       ),
+    );
+
+    _appThemeData = AppThemeData(
+      borderColor: const Color(0xFFECEFF3),
+      powerButtonColor: const Color(0xFFE1E5EB),
     );
   }
 
@@ -119,6 +141,26 @@ class ThemeChanger with ChangeNotifier {
           TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
         },
       ),
+    );
+  }
+}
+
+class AppThemeData {
+  final Color borderColor;
+  final Color powerButtonColor;
+
+  AppThemeData({
+    this.borderColor,
+    this.powerButtonColor,
+  });
+
+  AppThemeData copyWith({
+    Color borderColor,
+    Color powerButtonColor,
+  }) {
+    return AppThemeData(
+      borderColor: borderColor ?? this.borderColor,
+      powerButtonColor: powerButtonColor ?? this.powerButtonColor,
     );
   }
 }
