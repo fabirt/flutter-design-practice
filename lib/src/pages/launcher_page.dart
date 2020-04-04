@@ -23,6 +23,7 @@ class _MenuListView extends StatelessWidget {
     final appTheme = Provider.of<ThemeChanger>(context).currentTheme;
 
     return ListView.separated(
+      physics: const BouncingScrollPhysics(),
       itemCount: pageRoutes.length,
       separatorBuilder: (BuildContext context, int index) {
         return const Divider();

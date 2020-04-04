@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<ThemeChanger>(
-      create: (_) => ThemeChanger(2),
+      create: (_) => ThemeChanger(1),
       child: Builder(
         builder: (BuildContext context) {
           final themeChanger = Provider.of<ThemeChanger>(context);
@@ -18,6 +18,9 @@ class MyApp extends StatelessWidget {
             title: 'Flutter design pratice',
             home: LauncherPage(),
             theme: themeChanger.currentTheme,
+            builder: (BuildContext context, Widget child) {
+              return child;
+            },
           );
         },
       ),

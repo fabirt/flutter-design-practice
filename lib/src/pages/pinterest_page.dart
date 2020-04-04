@@ -87,6 +87,7 @@ class __PinterestGridViewState extends State<_PinterestGridView> {
   Widget build(BuildContext context) {
     final topPadding = MediaQuery.of(context).viewPadding.top + 10.0;
     return StaggeredGridView.countBuilder(
+      physics: const BouncingScrollPhysics(),
       controller: _scrollController,
       crossAxisCount: 4,
       itemCount: items.length,

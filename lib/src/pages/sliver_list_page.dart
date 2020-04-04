@@ -68,6 +68,7 @@ class _MainScroll extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
+      physics: const BouncingScrollPhysics(),
       slivers: <Widget>[
         SliverPersistentHeader(
           floating: true,

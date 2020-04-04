@@ -55,9 +55,26 @@ class ThemeChanger with ChangeNotifier {
   }
 
   void _setDarkMode() {
-    const accentColor = Color(0xFF00BFA6);
+    const accentColor = Color(0xFFB91ABB);
+    const surfaceColor = Color(0xFF04030B);
+    const canvasColor = Color(0xFF390D56);
     _currentTheme = ThemeData.dark().copyWith(
       accentColor: accentColor,
+      scaffoldBackgroundColor: surfaceColor,
+      canvasColor: canvasColor,
+      appBarTheme: const AppBarTheme(
+        color: surfaceColor,
+        elevation: 0.0,
+      ),
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
+        backgroundColor: accentColor,
+      ),
+      pageTransitionsTheme: const PageTransitionsTheme(
+        builders: {
+          TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+          TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+        },
+      ),
     );
   }
 
@@ -71,6 +88,12 @@ class ThemeChanger with ChangeNotifier {
       ),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
         backgroundColor: accentColor,
+      ),
+      pageTransitionsTheme: const PageTransitionsTheme(
+        builders: {
+          TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+          TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+        },
       ),
     );
   }
@@ -89,6 +112,12 @@ class ThemeChanger with ChangeNotifier {
       ),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
         backgroundColor: accentColor,
+      ),
+      pageTransitionsTheme: const PageTransitionsTheme(
+        builders: {
+          TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+          TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+        },
       ),
     );
   }

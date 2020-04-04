@@ -94,6 +94,7 @@ class __SlidesState extends State<_Slides> {
   @override
   Widget build(BuildContext context) {
     return PageView(
+      physics: const BouncingScrollPhysics(),
       controller: _controller,
       children: widget.slides.map((child) {
         return _Slide(child: child);
