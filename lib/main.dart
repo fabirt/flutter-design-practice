@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_design_practice/src/pages/launcher_page.dart';
 import 'package:flutter_design_practice/src/theme/theme.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +20,12 @@ class MyApp extends StatelessWidget {
             home: LauncherPage(),
             theme: themeChanger.currentTheme,
             builder: (BuildContext context, Widget child) {
-              return child;
+              return AnnotatedRegion<SystemUiOverlayStyle>(
+                value: SystemUiOverlayStyle.dark.copyWith(
+                  systemNavigationBarIconBrightness: Brightness.light,
+                ),
+                child: child,
+              );
             },
           );
         },
