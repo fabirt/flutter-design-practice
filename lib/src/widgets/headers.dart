@@ -3,24 +3,37 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 ///* Conventional rectangular header.
 class RectHeader extends StatelessWidget {
+  final Color backgroundColor;
+
+  const RectHeader({
+    Key key,
+    this.backgroundColor = const Color(0xFF615AAB),
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 300.0,
-      color: const Color(0xFF615AAB),
+      color: backgroundColor ?? Theme.of(context).accentColor,
     );
   }
 }
 
 ///* Container with rounded borders at the bottom.
 class RoundedRectHeader extends StatelessWidget {
+  final Color backgroundColor;
+
+  const RoundedRectHeader({
+    Key key,
+    this.backgroundColor = const Color(0xFF615AAB),
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 300.0,
-      decoration: const BoxDecoration(
-        color: Color(0xFF615AAB),
-        borderRadius: BorderRadius.only(
+      decoration: BoxDecoration(
+        color: backgroundColor ?? Theme.of(context).accentColor,
+        borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(60.0),
           bottomRight: Radius.circular(60.0),
         ),
@@ -31,25 +44,35 @@ class RoundedRectHeader extends StatelessWidget {
 
 ///* Header with diagonal rect.
 class DiagonalRectHeader extends StatelessWidget {
+  final Color backgroundColor;
+
+  const DiagonalRectHeader({
+    Key key,
+    this.backgroundColor = const Color(0xFF615AAB),
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
       height: double.infinity,
       width: double.infinity,
       child: CustomPaint(
-        painter: _DiagonalRectHeaderPainter(),
+        painter: _DiagonalRectHeaderPainter(backgroundColor),
       ),
     );
   }
 }
 
 class _DiagonalRectHeaderPainter extends CustomPainter {
+  final Color color;
+
+  _DiagonalRectHeaderPainter(this.color);
   @override
   void paint(Canvas canvas, Size size) {
     final path = Path();
     final paint = Paint();
 
-    paint.color = const Color(0xFF615AAB);
+    paint.color = color;
     paint.style = PaintingStyle.fill;
     paint.strokeWidth = 2.0;
 
@@ -68,25 +91,35 @@ class _DiagonalRectHeaderPainter extends CustomPainter {
 
 ///* Header with triangle shape.
 class TriangularHeader extends StatelessWidget {
+  final Color backgroundColor;
+
+  const TriangularHeader({
+    Key key,
+    this.backgroundColor = const Color(0xFF615AAB),
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
       height: double.infinity,
       width: double.infinity,
       child: CustomPaint(
-        painter: _TriangularHeaderPainter(),
+        painter: _TriangularHeaderPainter(backgroundColor),
       ),
     );
   }
 }
 
 class _TriangularHeaderPainter extends CustomPainter {
+  final Color color;
+
+  _TriangularHeaderPainter(this.color);
   @override
   void paint(Canvas canvas, Size size) {
     final path = Path();
     final paint = Paint();
 
-    paint.color = const Color(0xFF615AAB);
+    paint.color = color;
     paint.style = PaintingStyle.fill;
     paint.strokeWidth = 2.0;
 
@@ -103,25 +136,34 @@ class _TriangularHeaderPainter extends CustomPainter {
 
 ///* Header with a peak at the middle.
 class PeakHeader extends StatelessWidget {
+  final Color backgroundColor;
+
+  const PeakHeader({
+    Key key,
+    this.backgroundColor = const Color(0xFF615AAB),
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
       height: double.infinity,
       width: double.infinity,
       child: CustomPaint(
-        painter: _PeakHeaderPainter(),
+        painter: _PeakHeaderPainter(backgroundColor),
       ),
     );
   }
 }
 
 class _PeakHeaderPainter extends CustomPainter {
+  final Color color;
+
+  _PeakHeaderPainter(this.color);
   @override
   void paint(Canvas canvas, Size size) {
     final path = Path();
     final paint = Paint();
 
-    paint.color = const Color(0xFF615AAB);
+    paint.color = color;
     paint.style = PaintingStyle.fill;
     paint.strokeWidth = 2.0;
 
@@ -140,25 +182,34 @@ class _PeakHeaderPainter extends CustomPainter {
 
 ///* Header with bezier curve.
 class CurveHeader extends StatelessWidget {
+  final Color backgroundColor;
+
+  const CurveHeader({
+    Key key,
+    this.backgroundColor = const Color(0xFF615AAB),
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
       height: double.infinity,
       width: double.infinity,
       child: CustomPaint(
-        painter: _CurveHeaderPainter(),
+        painter: _CurveHeaderPainter(backgroundColor),
       ),
     );
   }
 }
 
 class _CurveHeaderPainter extends CustomPainter {
+  final Color color;
+
+  _CurveHeaderPainter(this.color);
   @override
   void paint(Canvas canvas, Size size) {
     final path = Path();
     final paint = Paint();
 
-    paint.color = const Color(0xFF615AAB);
+    paint.color = color;
     paint.style = PaintingStyle.fill;
     paint.strokeWidth = 2.0;
 
@@ -179,27 +230,36 @@ class _CurveHeaderPainter extends CustomPainter {
   bool shouldRepaint(_CurveHeaderPainter oldDelegate) => true;
 }
 
-///* Header with a sin wvae shape.
+///* Header with a sin wave shape.
 class WavyHeader extends StatelessWidget {
+  final Color backgroundColor;
+
+  const WavyHeader({
+    Key key,
+    this.backgroundColor = const Color(0xFF615AAB),
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
       height: double.infinity,
       width: double.infinity,
       child: CustomPaint(
-        painter: _WavyHeaderPainter(),
+        painter: _WavyHeaderPainter(backgroundColor),
       ),
     );
   }
 }
 
 class _WavyHeaderPainter extends CustomPainter {
+  final Color color;
+
+  _WavyHeaderPainter(this.color);
   @override
   void paint(Canvas canvas, Size size) {
     final path = Path();
     final paint = Paint();
 
-    paint.color = const Color(0xFF615AAB);
+    paint.color = color;
     paint.style = PaintingStyle.fill;
     paint.strokeWidth = 2.0;
 

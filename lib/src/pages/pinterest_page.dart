@@ -119,7 +119,7 @@ class _PinterestItem extends StatelessWidget {
       ),
       child: Center(
         child: CircleAvatar(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           child: Text('$index'),
         ),
       ),

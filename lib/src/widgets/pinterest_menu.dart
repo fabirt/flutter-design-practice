@@ -48,7 +48,7 @@ class _PinterestMenuBackground extends StatelessWidget {
       width: 250.0,
       height: 60.0,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).scaffoldBackgroundColor,
         borderRadius: BorderRadius.circular(30.0),
         boxShadow: const <BoxShadow>[
           BoxShadow(
@@ -86,12 +86,13 @@ class _PinterestMenuButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final model = Provider.of<_PinterestMenuModel>(context);
     final isActive = index == model.activeIndex;
-    final color = isActive ? Colors.black : Colors.blueGrey;
+    final color = isActive ? theme.accentColor : Colors.blueGrey;
     final size = isActive ? 28.0 : 22.0;
     return Material(
-      color: Colors.white,
+      color: Colors.transparent,
       child: InkWell(
         onTap: () {
           model.activeIndex = index;

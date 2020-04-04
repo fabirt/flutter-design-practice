@@ -6,15 +6,48 @@ import 'package:flutter_design_practice/src/widgets/headers.dart';
 class HeadersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Widget header;
+    final theme = Theme.of(context);
+    final accentColor = theme.accentColor;
     // header = RectHeader();
     // header = DiagonalRectHeader();
     // header = TriangularHeader();
     // header = PeakHeader();
     // header = CurveHeader();
-    header = WavyHeader();
     return Scaffold(
-      body: header,
+      body: PageView(
+        scrollDirection: Axis.vertical,
+        children: <Widget>[
+          Column(
+            children: <Widget>[
+              RectHeader(
+                backgroundColor: accentColor,
+              ),
+            ],
+          ),
+          Column(
+            children: <Widget>[
+              RoundedRectHeader(
+                backgroundColor: accentColor,
+              ),
+            ],
+          ),
+          DiagonalRectHeader(
+            backgroundColor: accentColor,
+          ),
+          TriangularHeader(
+            backgroundColor: accentColor,
+          ),
+          PeakHeader(
+            backgroundColor: accentColor,
+          ),
+          CurveHeader(
+            backgroundColor: accentColor,
+          ),
+          WavyHeader(
+            backgroundColor: accentColor,
+          ),
+        ],
+      ),
     );
   }
 }
