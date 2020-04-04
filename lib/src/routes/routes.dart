@@ -26,7 +26,7 @@ final List<_Route> pageRoutes = <_Route>[
     page: HeadersPage(),
   ),
   _Route(
-    icon: FontAwesomeIcons.peopleCarry,
+    icon: FontAwesomeIcons.waveSquare,
     title: 'Animated Square',
     page: AnimationsPage(),
   ),

@@ -6,7 +6,7 @@ class AnimationsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Animation & AnimationController')),
+      appBar: AppBar(title: const Text('Animations')),
       body: SafeArea(
         child: Stack(
           fit: StackFit.passthrough,
