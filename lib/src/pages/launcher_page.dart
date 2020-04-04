@@ -211,7 +211,7 @@ class __ThemeSwitcherState extends State<_ThemeSwitcher>
           primaryColorLight: Colors.red,
           primaryColorDark: Colors.blue,
           appBarTheme: AppBarTheme(
-            iconTheme: IconThemeData(color: Colors.white),
+            iconTheme: const IconThemeData(color: Colors.white),
             color: lerp(
               const Color(0xFF00BFA6),
               const Color(0xFF04030B),

@@ -1,16 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_design_practice/src/pages/launcher_page.dart';
-import 'package:flutter_design_practice/src/theme/theme.dart';
 import 'package:provider/provider.dart';
+
+import 'package:flutter_design_practice/src/pages/launcher_page.dart';
+import 'package:flutter_design_practice/src/shoes_app/models/shoe_model.dart';
+import 'package:flutter_design_practice/src/theme/theme.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<ThemeChanger>(
-      create: (_) => ThemeChanger(1),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<ThemeChanger>(
+          create: (_) => ThemeChanger(1),
+        ),
+        ChangeNotifierProvider<ShoeModel>(
+          create: (_) => ShoeModel(),
+        ),
+      ],
       child: Builder(
         builder: (BuildContext context) {
           final themeChanger = Provider.of<ThemeChanger>(context);

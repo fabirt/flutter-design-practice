@@ -8,8 +8,14 @@ import 'package:flutter_design_practice/src/pages/emergency_page.dart';
 import 'package:flutter_design_practice/src/pages/headers_page.dart';
 import 'package:flutter_design_practice/src/pages/pinterest_page.dart';
 import 'package:flutter_design_practice/src/pages/sliver_list_page.dart';
+import 'package:flutter_design_practice/src/shoes_app/pages/shoes_page.dart';
 
 final List<_Route> pageRoutes = <_Route>[
+  _Route(
+    icon: FontAwesomeIcons.shopify,
+    title: 'Shoes App',
+    page: ShoesPage(),
+  ),
   _Route(
     icon: FontAwesomeIcons.slideshare,
     title: 'Slideshow',
