@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'package:flutter_design_practice/src/music_player_app/pages/music_player_page.dart';
 import 'package:flutter_design_practice/src/pages/slide_show_page.dart';
 import 'package:flutter_design_practice/src/pages/animations_page.dart';
 import 'package:flutter_design_practice/src/pages/circular_progress_page.dart';
@@ -11,6 +12,11 @@ import 'package:flutter_design_practice/src/pages/sliver_list_page.dart';
 import 'package:flutter_design_practice/src/shoes_app/pages/shoes_page.dart';
 
 final List<_Route> pageRoutes = <_Route>[
+  _Route(
+    icon: FontAwesomeIcons.music,
+    title: 'Music Player App',
+    page: MusicPlayerPage(),
+  ),
   _Route(
     icon: FontAwesomeIcons.shopify,
     title: 'Shoes App',

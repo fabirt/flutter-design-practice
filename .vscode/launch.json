@@ -8,6 +8,12 @@
             "name": "Flutter debug",
             "request": "launch",
             "type": "dart"
+        },
+        {
+            "name": "Flutter profile",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
         }
     ]
 }
