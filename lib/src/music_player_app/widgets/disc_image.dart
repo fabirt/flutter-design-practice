@@ -80,6 +80,7 @@ class _DiscImageBuilder extends StatelessWidget {
             alignment: Alignment.center,
             children: <Widget>[
               const Image(
+                height: double.infinity,
                 fit: BoxFit.cover,
                 image: AssetImage('assets/images/background.jpg'),
               ),

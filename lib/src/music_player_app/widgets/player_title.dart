@@ -28,6 +28,8 @@ class _PlayerTitleState extends State<PlayerTitle>
   @override
   void dispose() {
     _playController.dispose();
+    _assetsAudioPlayer.stop();
+    _assetsAudioPlayer.dispose();
     super.dispose();
   }
 
@@ -42,6 +44,13 @@ class _PlayerTitleState extends State<PlayerTitle>
     _assetsAudioPlayer.current.listen((data) {
       playerModel.songDuration = data.duration;
     });
+
+    _assetsAudioPlayer.finished.listen((isFinished) {
+      if (isFinished ?? true) {
+        playerModel.isPlaying = false;
+        _playController.reverse();
+      }
+    });
   }
 
   @override
@@ -54,14 +63,14 @@ class _PlayerTitleState extends State<PlayerTitle>
           Column(
             children: <Widget>[
               Text(
-                'Far Away',
+                'For You',
                 style: TextStyle(
                   fontSize: 30.0,
                   color: Colors.white70,
                 ),
               ),
               Text(
-                '- Breaking Benjamin -',
+                '- James Stikå -',
                 style: TextStyle(
                   fontSize: 15.0,
                   color: Colors.white54,
